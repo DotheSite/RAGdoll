@@ -6,18 +6,18 @@ import { Redis } from '@upstash/redis'
 
 // AI provider configuration
 const AI_PROVIDERS = {
- // groq: {
- //   model: groq('meta-llama/llama-4-scout-17b-16e-instruct'),
- //   enabled: !!process.env.GROQ_API_KEY,
-//  },
+  groq: {
+    model: groq('meta-llama/llama-4-scout-17b-16e-instruct'),
+    enabled: !!process.env.GROQ_API_KEY,
+  },
   openai: {
     model: openai('gpt-4o'),
     enabled: !!process.env.OPENAI_API_KEY,
   },
-//  anthropic: {
- //   model: anthropic('claude-3-5-sonnet-20241022'),
- //   enabled: !!process.env.ANTHROPIC_API_KEY,
-//  },
+  anthropic: {
+   model: anthropic('claude-3-5-sonnet-20241022'),
+    enabled: !!process.env.ANTHROPIC_API_KEY,
+  },
 }
 
 // Get the active AI provider

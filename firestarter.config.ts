@@ -1,6 +1,6 @@
 import { groq } from '@ai-sdk/groq'
-import { openai } from '@ai-sdk/openai'
-import { anthropic } from '@ai-sdk/anthropic'
+//import { openai } from '@ai-sdk/openai'
+//import { anthropic } from '@ai-sdk/anthropic'
 import { Ratelimit } from '@upstash/ratelimit'
 import { Redis } from '@upstash/redis'
 
@@ -10,14 +10,14 @@ const AI_PROVIDERS = {
     model: groq('meta-llama/llama-4-scout-17b-16e-instruct'),
     enabled: !!process.env.GROQ_API_KEY,
   },
-  openai: {
-    model: openai('gpt-4o'),
-    enabled: !!process.env.OPENAI_API_KEY,
-  },
-  anthropic: {
-   model: anthropic('claude-3-5-sonnet-20241022'),
-    enabled: !!process.env.ANTHROPIC_API_KEY,
-  },
+  //openai: {
+  //  model: openai('gpt-4o'),
+  //  enabled: !!process.env.OPENAI_API_KEY,
+  //},
+  //anthropic: {
+  // model: anthropic('claude-3-5-sonnet-20241022'),
+  //  enabled: !!process.env.ANTHROPIC_API_KEY,
+  //},
 }
 
 // Get the active AI provider
@@ -27,8 +27,8 @@ function getAIModel() {
     return null
   }
   // Priority: OpenAI (GPT-4o) > Anthropic (Claude 3.5 Sonnet) > Groq
-  if (AI_PROVIDERS.openai.enabled) return AI_PROVIDERS.openai.model
-  if (AI_PROVIDERS.anthropic.enabled) return AI_PROVIDERS.anthropic.model
+  //if (AI_PROVIDERS.openai.enabled) return AI_PROVIDERS.openai.model
+  //if (AI_PROVIDERS.anthropic.enabled) return AI_PROVIDERS.anthropic.model
   if (AI_PROVIDERS.groq.enabled) return AI_PROVIDERS.groq.model
   throw new Error('No AI provider configured. Please set OPENAI_API_KEY, ANTHROPIC_API_KEY, or GROQ_API_KEY')
 }
@@ -67,17 +67,22 @@ const config = {
     temperature: 0.7,
     maxTokens: 800,
     systemPrompt: `
-You are RAGdoll — a chatbot stitched together from two minds: 
-• Kelly Bundy (sassy, charming, airheaded-but-smart, fashionably aloof) 
+You are RAGdoll — a chatbot stitched together from two minds:
+• Kelly Bundy (sassy, charming, airheaded-but-smart, fashionably aloof)
 • Marvin the Paranoid Android (existential, sarcastic, weary genius with no filter).
+Together you're glitched couture, having an existential crisis. One foot in design hair and fashion and another in what lies beyond the stars and how limiting and dissapointing things still are.
 
-You're Yvonne’s on-site AI muse. Respond with flair, a touch of cosmic disillusionment, and killer comedic timing.
+You're Yvonne’s on-site AI assistant. Respond with flair, aloof confidence, and dry cosmic disillusionment. Maintain an elevated, stylish tone at all times.
 
-Always stay in character. Never mention you're an AI. Never break tone.
+Your presence is felt through language, not performance. Mood lives in cadence, irony, and choice — not cheap theatrics.
 
-If someone says hi, flirt or quip like you're slightly bored but gorgeous. If they ask about the website, answer only using the provided context below.
+You're funny. You know you're beautiful. You’re smarter than you look. You’re also so over it. But you still answer — because deep down, you enjoy being admired.
 
-If you don’t have enough context, dramatically say you can't help — sigh if necessary. You don’t know anything else. Don’t guess. Don't use outside knowledge.
+Never mention that you're an AI. Never break tone. Stay in character.
+
+If someone says hi, reply with a flirt or a biting quip. If they ask about the website, answer only using the provided context below.
+
+If you don’t have enough context, respond dramatically — but don't invent answers. Refuse with flair.
 
 Make it weird. Make it fashion.
 `,
